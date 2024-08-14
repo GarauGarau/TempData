@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Temperatura</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
+	<style>
+    .chart-container {
+        position: relative;
+        height: 400px; /* Altezza fissa, che può essere regolata */
+        width: 100%;   /* Larghezza adattabile */
+    }
+    @media (max-width: 768px) {
+        .chart-container {
+            height: 300px; /* Altezza ridotta per schermi più piccoli */
+        }
+    }
+	.w-35 {
+        width: 35%;
+    }
+</style>
+
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center my-4">Dashboard Temperatura</h1>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <button id="update-data" class="btn btn-primary">Aggiorna Dati</button>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h4 id="latest-temp">Ultima temperatura rilevata: -- °C</h4>
+            </div>
+            <div class="col-12 text-center" style="font-size: 10px;">
+                <div id="last-update">Ultimo aggiornamento: --/--/---- --:--:--</div>
+            </div>
+        </div>
+		<div class="row mb-4">
+			<div class="col-12 text-center">
+				<select id="timeFilter" class="form-control w-35 mx-auto">
+					<option value="all">Tutti i dati</option>
+					<option value="last24h">Ultime 24h</option>
+					<option value="last12h">Ultime 12h</option>
+					<option value="last6h">Ultime 6h</option>
+					<option value="last3h">Ultime 3h</option>
+				</select>
+			</div>
+		</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="chart-container">
+                    <canvas id="minutoChart"></canvas>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="chart-container">
+                    <canvas id="oraChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
