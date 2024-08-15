@@ -14,12 +14,29 @@ function loadDataAndUpdateCharts() {
 }
 
 function parseDateString(dateString) {
-    const [datePart, timePart] = dateString.split(', ');
-    const [day, month, year] = datePart.split('/');
-    const [hours, minutes, seconds] = timePart.split(':');
+    // First, split the string by the comma, if it exists
+    let [datePart, timePart] = dateString.split(', ');
 
+    // If there's no comma, try splitting by a space (for the cases without a comma)
+    if (!timePart) {
+        [datePart, timePart] = dateString.split(' ');
+    }
+
+    // Split the date component into day, month, and year
+    const [day, month, year] = datePart.split('/').map(Number);
+
+    // Split the time component into hours, minutes, and seconds (or default to 0 if missing)
+    let [hours, minutes, seconds] = [0, 0, 0];
+    if (timePart) {
+        [hours, minutes, seconds] = timePart.split(':').map(Number);
+    }
+
+    // Create a new Date object using the parsed values
     return new Date(year, month - 1, day, hours, minutes, seconds);
 }
+
+
+
 
 
 function processAndDisplayData(data) {
@@ -45,7 +62,6 @@ function processAndDisplayData(data) {
 			Temperatura: temperatura   // Usa il valore corretto della temperatura
 		};
 	});
-
 
     // Verifica se ci sono dati validi
     if (processedData.every(row => isNaN(row.Temperatura))) {
@@ -76,7 +92,7 @@ function processAndDisplayData(data) {
     const dataMinuto = filteredDataMinuto.map(row => row.Temperatura);
 
     // Preparazione dei dati per il secondo grafico (media oraria)
-    const hourlyData = aggregateHourly(processedData);
+    const hourlyData = aggregateHourly(filteredDataMinuto); // Modificato per utilizzare i dati filtrati
     const labelsOra = hourlyData.map(row => row.label);
     const dataOra = hourlyData.map(row => row.meanTemp);
     const ciUpper = hourlyData.map(row => row.ciUpper);
@@ -85,8 +101,6 @@ function processAndDisplayData(data) {
     // Aggiorna i grafici
     updateCharts(labelsMinuto, dataMinuto, labelsOra, dataOra, ciUpper, ciLower);
 }
-
-
 
 function filterDataByTime(data, filter) {
     const lastTimestamp = data[data.length - 1].Data.getTime();
@@ -113,8 +127,6 @@ function filterDataByTime(data, filter) {
     console.log(`Dati filtrati (${filter}):`, filteredData);
     return filteredData;
 }
-
-
 
 function aggregateHourly(data) {
     const grouped = data.reduce((acc, curr) => {
@@ -149,140 +161,135 @@ function updateCharts(labelsMinuto, dataMinuto, labelsOra, dataOra, ciUpper, ciL
     const minutoCtx = document.getElementById('minutoChart').getContext('2d');
     const oraCtx = document.getElementById('oraChart').getContext('2d');
 
-    // Primo grafico (minuto per minuto)
-    window.minutoChart = new Chart(minutoCtx, {
-        type: 'line',
-        data: {
-            labels: labelsMinuto,
-            datasets: [{
-                label: 'Temperatura',
-                data: dataMinuto,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false,
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false, // Permette una maggiore flessibilità
-			plugins: {
-                legend: {
-                    display: false // Disabilita la leggenda
-                }
-            },
-            scales: {
-                x: {
-                    display: true,
-                    title: { display: true, text: '' },
-                    ticks: {
-                        callback: function(value, index, ticks) {
-                            // Mostra solo una etichetta ogni 10 per esempio
-                            if (index % 10 === 0) {
-                                const date = parseDateString(labelsMinuto[value]);
-                                if (!isNaN(date.getTime())) {
-                                    return date.toLocaleDateString('it-IT');
-                                } else {
-                                    console.error('Errore nella conversione della data:', labelsMinuto[value]);
-                                    return ''; // Restituisce una stringa vuota in caso di errore
-                                }
-                            } else {
-                                return ''; // Non mostra nulla per le altre etichette
-                            }
-                        }
-                    }
-                },
-                y: {
-                    display: true,
-                    title: { display: true, text: 'Temperatura (°C)' }
-                }
-            }
-        }
-    });
+    if (window.minutoChart && typeof window.minutoChart.destroy === 'function') {
+        window.minutoChart.destroy(); // Destroy the previous chart, if it exists
+    }
 
-    // Secondo grafico (media oraria con intervalli di confidenza)
-    window.oraChart = new Chart(oraCtx, {
-        type: 'line',
-        data: {
-            labels: labelsOra,
-            datasets: [
-                {
-                    label: 'Temperatura Media Oraria',
-                    data: dataOra,
-                    borderColor: 'rgba(153, 102, 255, 1)',
+    if (window.oraChart && typeof window.oraChart.destroy === 'function') {
+        window.oraChart.destroy(); // Destroy the previous chart, if it exists
+    }
+
+    // First chart (minute by minute)
+    try {
+        window.minutoChart = new Chart(minutoCtx, {
+            type: 'line',
+            data: {
+                labels: labelsMinuto,
+                datasets: [{
+                    label: 'Temperatura',
+                    data: dataMinuto,
+                    borderColor: 'rgba(75, 192, 192, 1)',
                     fill: false,
-                    tension: 0.1
-                },
-                {
-                    label: 'Confidenza 95%',
-                    data: ciUpper,
-                    borderColor: 'rgba(255, 159, 64, 0.2)',
-                    fill: '-1',
-                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    borderWidth: 1
-                },
-                {
-                    label: 'Confidenza Inferiore',
-                    data: ciLower,
-                    borderColor: 'rgba(255, 159, 64, 0.2)',
-                    fill: '-1',
-                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    borderWidth: 1
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false, // Mantiene il rapporto d'aspetto
-            plugins: {
-                legend: {
-                    display: false // Disabilita la leggenda
-                }
+                    tension: 0.1,
+					pointRadius: 0
+                }]
             },
-            scales: {
-                x: {
-                    display: true,
-                    title: { display: true, text: '' },
-                    ticks: {
-                        callback: function(value, index, ticks) {
-                            // Mostra solo una etichetta ogni 10 per esempio
-                            if (index % 3 === 0) {
-                                const date = parseDateString(labelsMinuto[value]);
-                                if (!isNaN(date.getTime())) {
-                                    return date.toLocaleDateString('it-IT');
-                                } else {
-                                    console.error('Errore nella conversione della data:', labelsMinuto[value]);
-                                    return ''; // Restituisce una stringa vuota in caso di errore
-                                }
-                            } else {
-                                return ''; // Non mostra nulla per le altre etichette
-                            }
-                        }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false // Disable the legend
                     }
                 },
-                y: {
-                    display: true,
-                    title: { display: true, text: 'Temperatura (°C)' }
+                scales: {
+                    x: {
+                        display: true,
+                        title: { display: true, text: '' },
+                        ticks: {
+                            callback: function(value, index, ticks) {
+                                // Show only one label every 10 for example
+                                if (index % 10 === 0) {
+                                    const date = parseDateString(labelsMinuto[value]);
+                                    if (!isNaN(date.getTime())) {
+                                        return date.toLocaleDateString('it-IT');
+                                    } else {
+                                        console.error('Errore nella conversione della data:', labelsMinuto[value]);
+                                        return '';
+                                    }
+                                } else {
+                                    return ''; 
+                                }
+                            }
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: { display: true, text: 'Temperatura (°C)' }
+                    }
                 }
             }
-        }
-    });
+        });
+    } catch (error) {
+        console.error('Errore durante la creazione del grafico minuto per minuto:', error);
+    }
+
+    // Second chart (hourly average with confidence intervals)
+    try {
+        window.oraChart = new Chart(oraCtx, {
+            type: 'line',
+            data: {
+                labels: labelsOra, 
+                datasets: [
+                    {
+                        label: 'Temperatura Media Oraria',
+                        data: dataOra,
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        fill: false,
+                        tension: 0.1,
+						pointRadius: 0
+                    },
+                    {
+                        label: 'C.I. 95%',
+                        data: ciUpper,
+                        borderColor: 'rgba(255, 159, 64, 0.2)',
+                        fill: '-1',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'C.I. 95%',
+                        data: ciLower,
+                        borderColor: 'rgba(255, 159, 64, 0.2)',
+                        fill: '-1',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: { display: true, text: '' },
+                        ticks: {
+                            callback: function(value, index, ticks) {
+                                return labelsOra[value];
+                            }
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: { display: true, text: 'Temperatura (°C)' }
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Errore durante la creazione del grafico media oraria:', error);
+    }
 }
-
-function rebindEvents() {
-    document.getElementById('update-data').addEventListener('click', function() {
-        loadDataAndUpdateCharts();
-    });
-
-    document.getElementById('timeFilter').addEventListener('change', function() {
-        loadDataAndUpdateCharts();
-    });
-}
-
-// Call rebindEvents after any dynamic content update
-rebindEvents();  // Initial binding
-
 
 document.addEventListener('DOMContentLoaded', function() {
+    loadDataAndUpdateCharts();
+
     document.getElementById('update-data').addEventListener('click', function() {
         loadDataAndUpdateCharts();
     });
@@ -290,12 +297,4 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('timeFilter').addEventListener('change', function() {
         loadDataAndUpdateCharts();
     });
-
-    // Caricamento iniziale dei dati
-    loadDataAndUpdateCharts();
 });
-
-
-
-// Caricamento iniziale
-loadDataAndUpdateCharts();
