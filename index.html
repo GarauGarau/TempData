@@ -6,8 +6,45 @@
     <title>Dashboard Temperatura</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	
-	<style>
+
+<style>
+    body {
+        background-color: rgb(238, 238, 237); /* Colore dello sfondo del sito */
+        color: #241e1d; /* Colore del testo principale */
+    }
+    .banner {
+        background-color: rgb(188, 173, 175); /* Colore del banner principale */
+        padding: 20px 10px; /* Aumenta il padding verticale per rendere il banner più alto */
+        margin-bottom: 20px;
+        border-bottom: 2px solid #dee2e6;
+        width: 100%;
+        color: #241e1d; /* Colore del testo nel banner */
+    }
+    .banner-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .banner-date {
+        font-size: 14px;
+        color: #241e1d; /* Colore della data nel banner */
+    }
+    .nav-item {
+        margin-left: 20px;
+        display: inline-block; /* Evita che ci siano spazi aggiuntivi */
+        vertical-align: middle;
+    }
+    .nav-item img {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+        /* Applica il colore alle icone (tramite filter) */
+    }
+    nav {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
     .chart-container {
         position: relative;
         height: 400px; /* Altezza fissa, che può essere regolata */
@@ -18,44 +55,70 @@
             height: 300px; /* Altezza ridotta per schermi più piccoli */
         }
     }
-	.w-35 {
+    .w-35 {
         width: 35%;
     }
+    footer {
+        margin-top: 50px;
+        padding: 10px 0;
+        text-align: center;
+        font-size: 12px;
+        color: #241e1d; /* Colore del testo nel footer */
+    }
+    footer img {
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+        /* Applica il colore alle icone nel footer */
+    }
 </style>
-
-
 </head>
 <body>
+    <!-- Banner -->
+    <div class="banner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <div class="banner-title">Dashboard Temperatura</div>
+                    <div class="banner-date" id="last-update">Ultimo aggiornamento: --/--/---- --:--:--</div>
+                </div>
+                <div class="col-6 text-right">
+                    <nav>
+                        <a class="nav-item" href="#" id="update-data">
+                            <img src="arrows-counter-clockwise.svg" alt="Aggiorna" title="Aggiorna Dati">
+                        </a>
+                        <a class="nav-item" href="index.html">
+                            <img src="chart-bar.svg" alt="Dashboard" title="Dashboard">
+                        </a>
+                        <a class="nav-item" href="about.html">
+                            <img src="info.svg" alt="About" title="About This Site">
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="text-center my-4">Dashboard Temperatura</h1>
-            </div>
-        </div>
-        <div class="row mb-4">
-            <div class="col-12 text-center">
-                <button id="update-data" class="btn btn-primary">Aggiorna Dati</button>
-            </div>
-        </div>
         <div class="row mb-4">
             <div class="col-12 text-center">
                 <h4 id="latest-temp">Ultima temperatura rilevata: -- °C</h4>
             </div>
-            <div class="col-12 text-center" style="font-size: 10px;">
-                <div id="last-update">Ultimo aggiornamento: --/--/---- --:--:--</div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <select id="timeFilter" class="form-control w-35 mx-auto">
+                    <option value="all">Tutti i dati</option>
+                    <option value="last24h">Ultime 24h</option>
+                    <option value="last12h">Ultime 12h</option>
+                    <option value="last6h">Ultime 6h</option>
+                    <option value="last3h">Ultime 3h</option>
+                </select>
             </div>
         </div>
-		<div class="row mb-4">
-			<div class="col-12 text-center">
-				<select id="timeFilter" class="form-control w-35 mx-auto">
-					<option value="all">Tutti i dati</option>
-					<option value="last24h">Ultime 24h</option>
-					<option value="last12h">Ultime 12h</option>
-					<option value="last6h">Ultime 6h</option>
-					<option value="last3h">Ultime 3h</option>
-				</select>
-			</div>
-		</div>
         <div class="row">
             <div class="col-12">
                 <div class="chart-container">
@@ -70,8 +133,14 @@
         </div>
     </div>
 
+    <footer>
+        <p>About me</p>
+        <a href="https://github.com/GarauGarau"><img src="github-logo.svg" alt="GitHub Logo"></a>
+        <a href="https://x.com/alessiogarau22"><img src="x-logo.svg" alt="X (Twitter) Logo"></a>
+        <a href="https://alessiogarau.io"><img src="user.svg" alt="Personal Website"></a>
+    </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="app.js"></script>
 </body>
-
 </html>

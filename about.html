@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Dashboard Temperatura</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    body {
+        background-color: rgb(238, 238, 237); /* Colore dello sfondo del sito */
+        color: #241e1d; /* Colore del testo principale */
+    }
+    .banner {
+        background-color: rgb(188, 173, 175); /* Colore del banner principale */
+        padding: 20px 10px; /* Aumenta il padding verticale per rendere il banner più alto */
+        margin-bottom: 20px;
+        border-bottom: 2px solid #dee2e6;
+        width: 100%;
+        color: #241e1d; /* Colore del testo nel banner */
+    }
+    .banner-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .banner-date {
+        font-size: 14px;
+        color: #241e1d; /* Colore della data nel banner */
+    }
+    .nav-item {
+        margin-left: 20px;
+        display: inline-block; /* Evita che ci siano spazi aggiuntivi */
+        vertical-align: middle;
+    }
+    .nav-item img {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+        /* Applica il colore alle icone (tramite filter) */
+    }
+    nav {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .content {
+        margin: 20px;
+        font-size: 18px;
+        line-height: 1.6;
+    }
+    footer {
+        margin-top: 50px;
+        padding: 10px 0;
+        text-align: center;
+        font-size: 12px;
+        color: #241e1d; /* Colore del testo nel footer */
+    }
+    footer img {
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+        /* Applica il colore alle icone nel footer */
+    }
+</style>
+</head>
+<body>
+    <!-- Banner -->
+    <div class="banner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <div class="banner-title">About This Site</div>
+                </div>
+                <div class="col-6 text-right">
+                    <nav>
+                        <a class="nav-item" href="index.html">
+                            <img src="chart-bar.svg" alt="Dashboard" title="Dashboard">
+                        </a>
+                        <a class="nav-item" href="#">
+                            <img src="info.svg" alt="About" title="About This Site">
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="content">
+            <h2>Work in progress</h2>
+        </div>
+    </div>
+
+    <footer>
+        <p>About me</p>
+        <a href="https://github.com/GarauGarau"><img src="github-logo.svg" alt="GitHub Logo"></a>
+        <a href="https://x.com/alessiogarau22"><img src="x-logo.svg" alt="X (Twitter) Logo"></a>
+        <a href="https://alessiogarau.io"><img src="user.svg" alt="Personal Website"></a>
+    </footer>
+</body>
+</html>
