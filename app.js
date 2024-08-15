@@ -225,66 +225,76 @@ function updateCharts(labelsMinuto, dataMinuto, labelsOra, dataOra, ciUpper, ciL
     }
 
     // Second chart (hourly average with confidence intervals)
-    try {
-        window.oraChart = new Chart(oraCtx, {
-            type: 'line',
-            data: {
-                labels: labelsOra, 
-                datasets: [
-                    {
-                        label: 'Temperatura Media Oraria',
-                        data: dataOra,
-                        borderColor: 'rgba(153, 102, 255, 1)',
-                        fill: false,
-                        tension: 0.1,
+	try {
+		window.oraChart = new Chart(oraCtx, {
+			type: 'line',
+			data: {
+				labels: labelsOra, 
+				datasets: [
+					{
+						label: 'Temperatura Media Oraria',
+						data: dataOra,
+						borderColor: 'rgba(153, 102, 255, 1)',
+						fill: false,
+						tension: 0.1,
 						pointRadius: 0
-                    },
-                    {
-                        label: 'C.I. 95%',
-                        data: ciUpper,
-                        borderColor: 'rgba(255, 159, 64, 0.2)',
-                        fill: '-1',
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'C.I. 95%',
-                        data: ciLower,
-                        borderColor: 'rgba(255, 159, 64, 0.2)',
-                        fill: '-1',
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                        borderWidth: 1
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        display: true,
-                        title: { display: true, text: '' },
-                        ticks: {
-                            callback: function(value, index, ticks) {
-                                return labelsOra[value];
-                            }
-                        }
-                    },
-                    y: {
-                        display: true,
-                        title: { display: true, text: 'Temperatura (°C)' }
-                    }
-                }
-            }
-        });
-    } catch (error) {
-        console.error('Errore durante la creazione del grafico media oraria:', error);
-    }
+					},
+					{
+						label: 'C.I. 95%',
+						data: ciUpper,
+						borderColor: 'rgba(255, 159, 64, 0.2)',
+						fill: '-1',
+						backgroundColor: 'rgba(255, 159, 64, 0.2)',
+						borderWidth: 1,
+						pointRadius: 0
+					},
+					{
+						label: 'C.I. 95%',
+						data: ciLower,
+						borderColor: 'rgba(255, 159, 64, 0.2)',
+						fill: '-1',
+						backgroundColor: 'rgba(255, 159, 64, 0.2)',
+						borderWidth: 1,
+						pointRadius: 0
+					}
+				]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					legend: {
+						display: false
+					}
+				},
+				scales: {
+					    x: {
+							display: true,
+							title: { display: true, text: '' },
+							ticks: {
+								callback: function(value, index, ticks) {
+									// Mostra solo un'etichetta ogni 3
+									if (index % 2 === 0) {
+										const dateLabel = labelsOra[value];
+										const [datePart, timePart] = dateLabel.split(' ');
+										return datePart; // Restituisce solo la data
+									} else {
+										return ''; // Non mostra nulla
+									}
+								}
+							}
+						},
+					y: {
+						display: true,
+						title: { display: true, text: 'Temperatura (°C)' }
+					}
+				}
+			}
+		});
+	} catch (error) {
+		console.error('Errore durante la creazione del grafico media oraria:', error);
+	}
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {
