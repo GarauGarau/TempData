@@ -5,79 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Temperatura</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<style>
-    body {
-        background-color: rgb(238, 238, 237); /* Colore dello sfondo del sito */
-        color: #241e1d; /* Colore del testo principale */
-    }
-    .banner {
-        background-color: rgb(188, 173, 175); /* Colore del banner principale */
-        padding: 20px 10px; /* Aumenta il padding verticale per rendere il banner più alto */
-        margin-bottom: 20px;
-        border-bottom: 2px solid #dee2e6;
-        width: 100%;
-        color: #241e1d; /* Colore del testo nel banner */
-    }
-    .banner-title {
-        font-size: 24px;
-        font-weight: bold;
-    }
-    .banner-date {
-        font-size: 14px;
-        color: #241e1d; /* Colore della data nel banner */
-    }
-    .nav-item {
-        margin-left: 20px;
-        display: inline-block; /* Evita che ci siano spazi aggiuntivi */
-        vertical-align: middle;
-    }
-    .nav-item img {
-        width: 24px;
-        height: 24px;
-        display: inline-block;
-        filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
-        /* Applica il colore alle icone (tramite filter) */
-    }
-    nav {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-    .chart-container {
-        position: relative;
-        height: 400px; /* Altezza fissa, che può essere regolata */
-        width: 100%;   /* Larghezza adattabile */
-    }
-    @media (max-width: 768px) {
-        .chart-container {
-            height: 300px; /* Altezza ridotta per schermi più piccoli */
+    <style>
+        body {
+            background-color: rgb(238, 238, 237);
+            color: #241e1d;
         }
-    }
-    .w-35 {
-        width: 35%;
-    }
-    footer {
-        margin-top: 50px;
-        padding: 10px 0;
-        text-align: center;
-        font-size: 12px;
-        color: #241e1d; /* Colore del testo nel footer */
-    }
-    footer img {
-        margin-left: 10px;
-        margin-right: 10px;
-        width: 24px;
-        height: 24px;
-        cursor: pointer;
-        filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
-        /* Applica il colore alle icone nel footer */
-    }
-</style>
+        .banner {
+            background-color: rgb(188, 173, 175);
+            padding: 20px 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #dee2e6;
+            width: 100%;
+            color: #241e1d;
+        }
+        .banner-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .banner-date {
+            font-size: 14px;
+            color: #241e1d;
+        }
+        .nav-item {
+            margin-left: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .nav-item img {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+        }
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .counter {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .counter h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .counter p {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .counter-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+        .counter-details span {
+            display: inline-block;
+        }
+        footer {
+            margin-top: 50px;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 12px;
+            color: #241e1d;
+        }
+        footer img {
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+        }
+    </style>
 </head>
 <body>
-    <!-- Banner -->
     <div class="banner">
         <div class="container-fluid">
             <div class="row">
@@ -87,11 +97,8 @@
                 </div>
                 <div class="col-6 text-right">
                     <nav>
-                        <a class="nav-item" href="#" id="update-data">
-                            <img src="arrows-counter-clockwise.svg" alt="Aggiorna" title="Aggiorna Dati">
-                        </a>
-                        <a class="nav-item" href="index.html">
-                            <img src="chart-bar.svg" alt="Dashboard" title="Dashboard">
+                        <a class="nav-item" href="charts.html">
+                            <img src="chart-bar.svg" alt="Grafici" title="Visualizza Grafici">
                         </a>
                         <a class="nav-item" href="about.html">
                             <img src="info.svg" alt="About" title="About This Site">
@@ -102,32 +109,39 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row mb-4">
-            <div class="col-12 text-center">
-                <h4 id="latest-temp">Ultima temperatura rilevata: -- °C</h4>
-            </div>
-        </div>
-        <div class="row mb-4">
-            <div class="col-12 text-center">
-                <select id="timeFilter" class="form-control w-35 mx-auto">
-                    <option value="all">Tutti i dati</option>
-                    <option value="last24h">Ultime 24h</option>
-                    <option value="last12h">Ultime 12h</option>
-                    <option value="last6h">Ultime 6h</option>
-                    <option value="last3h">Ultime 3h</option>
-                </select>
-            </div>
-        </div>
+    <div class="container">
         <div class="row">
-            <div class="col-12">
-                <div class="chart-container">
-                    <canvas id="minutoChart"></canvas>
+            <div class="col-md-4">
+                <div class="counter">
+                    <h3>Umidità</h3>
+                    <p id="humidity">--%</p>
+                    <div class="counter-details">
+                        <span id="humidity-min">Min: --%</span>
+                        <span id="humidity-avg">Avg: --%</span>
+                        <span id="humidity-max">Max: --%</span>
+                    </div>
                 </div>
             </div>
-            <div class="col-12 mt-4">
-                <div class="chart-container">
-                    <canvas id="oraChart"></canvas>
+            <div class="col-md-4">
+                <div class="counter">
+                    <h3>Temperatura</h3>
+                    <p id="temperature">--°C</p>
+                    <div class="counter-details">
+                        <span id="temperature-min">Min: --°C</span>
+                        <span id="temperature-avg">Avg: --°C</span>
+                        <span id="temperature-max">Max: --°C</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="counter">
+                    <h3>Pressione</h3>
+                    <p id="pressure">-- hPa</p>
+                    <div class="counter-details">
+                        <span id="pressure-min">Min: -- hPa</span>
+                        <span id="pressure-avg">Avg: -- hPa</span>
+                        <span id="pressure-max">Max: -- hPa</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,10 +151,63 @@
         <p>About me</p>
         <a href="https://github.com/GarauGarau"><img src="github-logo.svg" alt="GitHub Logo"></a>
         <a href="https://x.com/alessiogarau22"><img src="x-logo.svg" alt="X (Twitter) Logo"></a>
-        <a href="https://alessiogarau.io"><img src="user.svg" alt="Personal Website"></a>
+        <a href="https://alessiogarau.me"><img src="user.svg" alt="Personal Website"></a>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('https://script.google.com/macros/s/AKfycbxd1U-hm2xo79srYB-o9AdgHBBCKOrbaL4fFzdJlXbzhpV08Sq8Tua6qk_5Q78cJWFZ/exec')
+                .then(response => response.json())
+                .then(data => {
+                    // Calcola i valori min, max e media per umidità
+                    const humidityValues = data.map(item => item['Umidità'] * 100);
+                    const humidityMin = Math.min(...humidityValues).toFixed(1);
+                    const humidityMax = Math.max(...humidityValues).toFixed(1);
+                    const humidityAvg = (humidityValues.reduce((sum, val) => sum + val, 0) / humidityValues.length).toFixed(1);
+
+                    // Calcola i valori min, max e media per temperatura
+                    const temperatureValues = data.map(item => item['Temperatura']);
+                    const temperatureMin = Math.min(...temperatureValues).toFixed(1);
+                    const temperatureMax = Math.max(...temperatureValues).toFixed(1);
+                    const temperatureAvg = (temperatureValues.reduce((sum, val) => sum + val, 0) / temperatureValues.length).toFixed(1);
+
+                    // Calcola i valori min, max e media per pressione
+                    const pressureValues = data.map(item => item['Pressione']);
+                    const pressureMin = Math.min(...pressureValues).toFixed(1);
+                    const pressureMax = Math.max(...pressureValues).toFixed(1);
+                    const pressureAvg = (pressureValues.reduce((sum, val) => sum + val, 0) / pressureValues.length).toFixed(1);
+
+                    // Prendi l'ultima riga dei dati
+                    const lastRow = data[data.length - 1];
+
+                    // Aggiorna i contatori principali con l'ultimo valore
+                    document.getElementById('humidity').textContent = `${(lastRow['Umidità'] * 100).toFixed(1)}%`;
+                    document.getElementById('temperature').textContent = `${lastRow['Temperatura']}°C`;
+                    document.getElementById('pressure').textContent = `${lastRow['Pressione']} hPa`;
+
+                    // Aggiorna i valori min, avg, max
+                    document.getElementById('humidity-min').textContent = `Min: ${humidityMin}%`;
+                    document.getElementById('humidity-avg').textContent = `Avg: ${humidityAvg}%`;
+                    document.getElementById('humidity-max').textContent = `Max: ${humidityMax}%`;
+
+                    document.getElementById('temperature-min').textContent = `Min: ${temperatureMin}°C`;
+                    document.getElementById('temperature-avg').textContent = `Avg: ${temperatureAvg}°C`;
+                    document.getElementById('temperature-max').textContent = `Max: ${temperatureMax}°C`;
+
+                    document.getElementById('pressure-min').textContent = `Min: ${pressureMin} hPa`;
+                    document.getElementById('pressure-avg').textContent = `Avg: ${pressureAvg} hPa`;
+                    document.getElementById('pressure-max').textContent = `Max: ${pressureMax} hPa`;
+
+                    // Formatta la data dell'ultimo aggiornamento
+                    if (lastRow['Data']) {
+                        const date = new Date(lastRow['Data']);
+                        const formattedDate = date.toLocaleDateString('it-IT');
+                        const formattedTime = date.toLocaleTimeString('it-IT');
+                        document.getElementById('last-update').textContent = `Ultimo aggiornamento: ${formattedDate} ${formattedTime}`;
+                    }
+                })
+                .catch(error => console.error('Errore durante il recupero dei dati:', error));
+        });
+    </script>
 </body>
 </html>
