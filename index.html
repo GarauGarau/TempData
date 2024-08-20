@@ -182,8 +182,8 @@
 
                     // Aggiorna i contatori principali con l'ultimo valore
                     document.getElementById('humidity').textContent = `${(lastRow['Umidità'] * 100).toFixed(1)}%`;
-                    document.getElementById('temperature').textContent = `${lastRow['Temperatura']}°C`;
-                    document.getElementById('pressure').textContent = `${lastRow['Pressione']} hPa`;
+                    document.getElementById('temperature').textContent = `${lastRow['Temperatura'].toFixed(1)}°C`;
+                    document.getElementById('pressure').textContent = `${lastRow['Pressione'].toFixed(1)} hPa`;
 
                     // Aggiorna i valori min, avg, max
                     document.getElementById('humidity-min').textContent = `Min: ${humidityMin}%`;
