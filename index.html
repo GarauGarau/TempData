@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Temperatura</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -60,6 +61,11 @@
             font-weight: bold;
             margin: 0;
         }
+        .counter canvas {
+            width: 100px;
+            height: 100px;
+            margin: auto;
+        }
         .counter-details {
             display: flex;
             justify-content: space-between;
@@ -101,7 +107,7 @@
                             <img src="chart-bar.svg" alt="Grafici" title="Visualizza Grafici">
                         </a>
                         <a class="nav-item" href="about.html">
-                            <img src="info.svg" alt="About" title="About This Site">
+                            <img src="info.svg" alt="About This Site">
                         </a>
                     </nav>
                 </div>
@@ -114,6 +120,7 @@
             <div class="col-md-4">
                 <div class="counter">
                     <h3>Umidità</h3>
+                    <canvas id="humidityChart"></canvas>
                     <p id="humidity">--%</p>
                     <div class="counter-details">
                         <span id="humidity-min">Min: --%</span>
@@ -125,6 +132,7 @@
             <div class="col-md-4">
                 <div class="counter">
                     <h3>Temperatura</h3>
+                    <canvas id="temperatureChart"></canvas>
                     <p id="temperature">--°C</p>
                     <div class="counter-details">
                         <span id="temperature-min">Min: --°C</span>
@@ -136,6 +144,7 @@
             <div class="col-md-4">
                 <div class="counter">
                     <h3>Pressione</h3>
+                    <canvas id="pressureChart"></canvas>
                     <p id="pressure">-- hPa</p>
                     <div class="counter-details">
                         <span id="pressure-min">Min: -- hPa</span>
@@ -205,6 +214,85 @@
                         const formattedTime = date.toLocaleTimeString('it-IT');
                         document.getElementById('last-update').textContent = `Ultimo aggiornamento: ${formattedDate} ${formattedTime}`;
                     }
+
+                    // Funzione per aggiornare i grafici
+                    function updateGauge(chart, value, min, max) {
+                        const percentage = (value - min) / (max - min) * 100;
+                        let color = '#549256';
+
+                        if (percentage > 80) {
+                            color = '#e75d56';
+                        } else if (percentage > 50) {
+                            color = '#eac861';
+                        } else if (percentage > 20) {
+                            color = '#549256';
+                        }
+
+                        chart.data.datasets[0].data = [percentage, 100 - percentage];
+                        chart.data.datasets[0].backgroundColor = [color, '#e0e0e0'];
+                        chart.update();
+                    }
+
+                    // Configura i grafici
+                    const humidityChart = new Chart(document.getElementById('humidityChart').getContext('2d'), {
+                        type: 'doughnut',
+                        data: {
+                            datasets: [{
+                                data: [0, 100],
+                                backgroundColor: ['#00ff00', '#e0e0e0']
+                            }]
+                        },
+                        options: {
+                            circumference: 180,
+                            rotation: 270,
+                            cutout: '60%',
+                            plugins: {
+                                tooltip: { enabled: false }
+                            }
+                        }
+                    });
+
+                    const temperatureChart = new Chart(document.getElementById('temperatureChart').getContext('2d'), {
+                        type: 'doughnut',
+                        data: {
+                            datasets: [{
+                                data: [0, 100],
+                                backgroundColor: ['#00ff00', '#e0e0e0']
+                            }]
+                        },
+                        options: {
+                            circumference: 180,
+                            rotation: 270,
+                            cutout: '60%',
+                            plugins: {
+                                tooltip: { enabled: false }
+                            }
+                        }
+                    });
+
+                    const pressureChart = new Chart(document.getElementById('pressureChart').getContext('2d'), {
+                        type: 'doughnut',
+                        data: {
+                            datasets: [{
+                                data: [0, 100],
+                                backgroundColor: ['#00ff00', '#e0e0e0']
+                            }]
+                        },
+                        options: {
+                            circumference: 180,
+                            rotation: 270,
+                            cutout: '60%',
+                            plugins: {
+                                tooltip: { enabled: false }
+                            }
+                        }
+                    });
+
+                    // Aggiorna i grafici con i dati attuali
+                    updateGauge(humidityChart, (lastRow['Umidità'] * 100), humidityMin, humidityMax);
+                    updateGauge(temperatureChart, lastRow['Temperatura'], temperatureMin, temperatureMax);
+                    updateGauge(pressureChart, lastRow['Pressione'], pressureMin, pressureMax);
+
                 })
                 .catch(error => console.error('Errore durante il recupero dei dati:', error));
         });
