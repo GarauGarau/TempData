@@ -190,7 +190,7 @@
                     const lastRow = data[data.length - 1];
 
                     // Aggiorna i contatori principali con l'ultimo valore
-                    document.getElementById('humidity').textContent = `${(lastRow['Umidità'] * 100).toFixed(1)}%`;
+                    document.getElementById('humidity').textContent = `${(lastRow['Umidità']).toFixed(1)}%`;
                     document.getElementById('temperature').textContent = `${lastRow['Temperatura'].toFixed(1)}°C`;
                     document.getElementById('pressure').textContent = `${lastRow['Pressione'].toFixed(1)} hPa`;
 
@@ -289,7 +289,7 @@
                     });
 
                     // Aggiorna i grafici con i dati attuali
-                    updateGauge(humidityChart, (lastRow['Umidità'] * 100), humidityMin, humidityMax);
+                    updateGauge(humidityChart, (lastRow['Umidità']), humidityMin, humidityMax);
                     updateGauge(temperatureChart, lastRow['Temperatura'], temperatureMin, temperatureMax);
                     updateGauge(pressureChart, lastRow['Pressione'], pressureMin, pressureMax);
 
