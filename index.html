@@ -169,7 +169,7 @@
                 .then(response => response.json())
                 .then(data => {
                     // Calcola i valori min, max e media per umidità
-                    const humidityValues = data.map(item => item['Umidità'] * 100);
+                    const humidityValues = data.map(item => item['Umidità']);
                     const humidityMin = Math.min(...humidityValues).toFixed(1);
                     const humidityMax = Math.max(...humidityValues).toFixed(1);
                     const humidityAvg = (humidityValues.reduce((sum, val) => sum + val, 0) / humidityValues.length).toFixed(1);
