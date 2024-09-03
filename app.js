@@ -119,6 +119,9 @@ function filterDataByTime(data, filter) {
         case 'last3h':
             timeFrame = 3 * 60 * 60 * 1000;  // 3 ore in millisecondi
             break;
+		case 'last1h':
+            timeFrame = 1 * 60 * 60 * 1000;  // 1 ore in millisecondi
+            break;
         default:
             return data; // Se è selezionato "tutti", restituisci tutti i dati
     }
