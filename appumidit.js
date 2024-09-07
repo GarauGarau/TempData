@@ -77,7 +77,7 @@ function processAndDisplayData(data) {
 
     // Latest temperature
     const latestTemp = filteredDataMinuto[filteredDataMinuto.length - 1].Umidità;
-    document.getElementById('latest-temp').textContent = `Ultima temperatura rilevata: ${latestTemp.toFixed(2)}°C`;
+    document.getElementById('latest-temp').textContent = `Ultima temperatura rilevata: ${latestTemp.toFixed(2)}%`;
 
     // Last update time
     const lastUpdateTime = new Date().toLocaleString('it-IT', { hour12: false });
