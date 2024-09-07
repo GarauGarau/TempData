@@ -276,8 +276,11 @@ footer img {
                             x: { display: false },
                             y: {
                                 display: true,
-                                min: Math.min(...recentHumidityValues) - 1,  // Minimo - 1pp
-                                max: Math.max(...recentHumidityValues) + 1   // Massimo + 1pp
+                                min: Math.min(...recentHumidityValues) - 0.05,  // Minimo - 0.05
+                                max: Math.max(...recentHumidityValues) + 0.05,  // Massimo + 0.05
+                                ticks: {
+                                    stepSize: 0.05 // Step fisso di 0.05
+                                }
                             }
                         },
                         plugins: {
@@ -303,8 +306,11 @@ footer img {
                             x: { display: false },
                             y: {
                                 display: true,
-                                min: Math.min(...recentTemperatureValues) - 1,  // Minimo - 1
-                                max: Math.max(...recentTemperatureValues) + 1   // Massimo + 1
+                                min: Math.min(...recentTemperatureValues) - 0.5,  // Minimo - 0.5
+                                max: Math.max(...recentTemperatureValues) + 0.5,  // Massimo + 0.5
+                                ticks: {
+                                    stepSize: 0.5 // Step fisso di 0.5
+                                }
                             }
                         },
                         plugins: {
@@ -330,8 +336,11 @@ footer img {
                             x: { display: false },
                             y: {
                                 display: true,
-                                min: Math.min(...recentPressureValues) - 1,  // Minimo - 1
-                                max: Math.max(...recentPressureValues) + 1   // Massimo + 1
+                                min: Math.min(...recentPressureValues) - 0.5,  // Minimo - 0.5
+                                max: Math.max(...recentPressureValues) + 0.5,  // Massimo + 0.5
+                                ticks: {
+                                    stepSize: 0.5 // Step fisso di 0.5
+                                }
                             }
                         },
                         plugins: {
@@ -344,6 +353,8 @@ footer img {
             .catch(error => console.error('Errore durante il recupero dei dati:', error));
     });
 </script>
+
+
 
 
 </body>
