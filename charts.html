@@ -6,64 +6,85 @@
     <title>Grafici - Dashboard Temperatura</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            background-color: rgb(238, 238, 237);
-            color: #241e1d;
-        }
-        .banner {
-            background-color: rgb(188, 173, 175);
-            padding: 20px 10px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #dee2e6;
-            width: 100%;
-            color: #241e1d;
-        }
-        .banner-title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .nav-item {
-            margin-left: 20px;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        .nav-item img {
-            width: 24px;
-            height: 24px;
-            display: inline-block;
-            filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
-        }
-        nav {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-        .chart-container {
-            position: relative;
-            height: 400px;
-            width: 100%;
-        }
-        @media (max-width: 768px) {
-            .chart-container {
-                height: 300px;
-            }
-        }
-        footer {
-            margin-top: 50px;
-            padding: 10px 0;
-            text-align: center;
-            font-size: 12px;
-            color: #241e1d;
-        }
-        footer img {
-            margin-left: 10px;
-            margin-right: 10px;
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
-        }
+<style>
+		body {
+			background-color: rgb(238, 238, 237);
+			color: #241e1d;
+		}
+
+		/* Banner */
+		.banner {
+			background-color: rgb(188, 173, 175);
+			padding: 20px 10px;
+			margin-bottom: 20px;
+			border-bottom: 2px solid #dee2e6;
+			width: 100%;
+			color: #241e1d;
+		}
+
+		.banner-title {
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		/* Icone di navigazione */
+		.nav-item img {
+			width: 24px;
+			height: 24px;
+			display: inline-block;
+			filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+		}
+
+		/* Contenitore grafico */
+		.chart-container {
+			position: relative;
+			height: 400px;
+			width: 100%;
+		}
+
+		/* Navigazione */
+		nav {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			flex-wrap: wrap; /* Consente il wrapping solo quando necessario */
+		}
+
+		.nav-item {
+			margin-left: 20px;
+			display: inline-block;
+			vertical-align: middle;
+			text-align: center;
+		}
+
+		/* Media query per schermi piccoli */
+		@media (max-width: 576px) {
+			nav {
+				justify-content: center; /* Centra le icone in modalità mobile */
+			}
+			.nav-item {
+				margin-left: 10px; /* Riduce il margine per adattarsi meglio */
+				margin-bottom: 10px; /* Aggiunge spazio verticale tra le righe */
+			}
+		}
+
+		/* Footer */
+		footer {
+			margin-top: 50px;
+			padding: 10px 0;
+			text-align: center;
+			font-size: 12px;
+			color: #241e1d;
+		}
+
+		footer img {
+			margin: 0 10px;
+			width: 24px;
+			height: 24px;
+			cursor: pointer;
+			filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+		}
+
     </style>
 </head>
 
@@ -84,8 +105,17 @@
                         <a class="nav-item" href="index.html">
                             <img src="speedometer.svg" alt="Home" title="Dashboard">
                         </a>
+                        <a class="nav-item" href="humcharts.html">
+                            <img src="drop-half-bottom.svg" alt="Grafici" title="Grafici umidità">
+                        </a>
+						<a class="nav-item" href="presscharts.html">
+                            <img src="cloud-sun.svg" alt="Grafici" title="Grafici pressione barometrica">
+                        </a>
+						<a class="nav-item" href="aircharts.html">
+                            <img src="fan.svg" alt="Grafici" title="Grafici qualità aria">
+                        </a>
                         <a class="nav-item" href="about.html">
-                            <img src="info.svg" alt="About" title="About This Site">
+                            <img src="info.svg" alt="About This Site">
                         </a>
                     </nav>
                 </div>

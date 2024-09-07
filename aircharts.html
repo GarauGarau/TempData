@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grafici - Dashboard Umidità</title>
+    <title>Grafici - Dashboard gas</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
+<style>
 		body {
 			background-color: rgb(238, 238, 237);
 			color: #241e1d;
@@ -94,7 +94,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
-                    <div class="banner-title">Dashboard pressione barometrica</div>
+                    <div class="banner-title">Dashboard qualità dell'aria</div>
                     <div class="banner-date" id="last-update">Ultimo aggiornamento: --/--/---- --:--:--</div>
                 </div>
                 <div class="col-6 text-right">
@@ -111,8 +111,8 @@
 						<a class="nav-item" href="humcharts.html">
                             <img src="drop-half-bottom.svg" alt="Grafici" title="Grafici umidità">
                         </a>
-						<a class="nav-item" href="aircharts.html">
-                            <img src="fan.svg" alt="Grafici" title="Grafici qualità aria">
+						<a class="nav-item" href="presscharts.html">
+                            <img src="cloud-sun.svg" alt="Grafici" title="Grafici umidità">
                         </a>
                         <a class="nav-item" href="about.html">
                             <img src="info.svg" alt="About This Site">
@@ -126,7 +126,7 @@
     <div class="container-fluid">
         <div class="row mb-4">
             <div class="col-12 text-center">
-                <h4 id="latest-temp">Ultima pressione rilevata: -- hPa</h4>
+                <h4 id="latest-temp">Ultimo valore rilevato: -- kOhms</h4>
             </div>
         </div>
         <div class="row mb-4">
@@ -163,6 +163,6 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="apppress.js"></script>
+    <script src="appair.js"></script>
 </body>
 </html>

@@ -38,11 +38,11 @@ function parseDateString(dateString) {
 function processAndDisplayData(data) {
     // Pre-process data
 	const processedData = data.map(row => {
-		let temperatura = row.Pressione;
+		let temperatura = row.gas;
 		if (typeof temperatura === 'string') {
 			temperatura = parseFloat(temperatura.replace(',', '.'));
 		} else if (typeof temperatura !== 'number') {
-			console.error('Campo Pressione non trovato o non valido:', row);
+			console.error('Campo gas non trovato o non valido:', row);
 			temperatura = NaN;  // Segna come non valido se non è un numero o stringa
 		}
 
@@ -55,12 +55,12 @@ function processAndDisplayData(data) {
 		return {
 			...row,
 			Data: parsedDate,  // Assicurati che questa data sia valida
-			Pressione: temperatura   // Usa il valore corretto della temperatura
+			gas: temperatura   // Usa il valore corretto della temperatura
 		};
 	});
 
     // Verifica se ci sono dati validi
-    if (processedData.every(row => isNaN(row.Pressione))) {
+    if (processedData.every(row => isNaN(row.gas))) {
         console.error('Tutti i valori di temperatura sono non validi.');
         return;
     }
@@ -76,8 +76,8 @@ function processAndDisplayData(data) {
     }
 
     // Latest temperature
-    const latestTemp = filteredDataMinuto[filteredDataMinuto.length - 1].Pressione;
-    document.getElementById('latest-temp').textContent = `Ultima pressione rilevata: ${latestTemp.toFixed(2)} hPa`;
+    const latestTemp = filteredDataMinuto[filteredDataMinuto.length - 1].gas;
+    document.getElementById('latest-temp').textContent = `Ultimo valore rilevato: ${latestTemp.toFixed(2)}kOhms`;
 
     // Last update time
     const lastUpdateTime = new Date().toLocaleString('it-IT', { hour12: false });
@@ -85,7 +85,7 @@ function processAndDisplayData(data) {
 
     // Preparazione dei dati per il primo grafico (minuto per minuto)
     const labelsMinuto = filteredDataMinuto.map(row => row.Data.toLocaleString('it-IT'));
-    const dataMinuto = filteredDataMinuto.map(row => row.Pressione);
+    const dataMinuto = filteredDataMinuto.map(row => row.gas);
 
     // Preparazione dei dati per il secondo grafico (media oraria)
     const hourlyData = aggregateHourly(filteredDataMinuto);
@@ -137,7 +137,7 @@ function aggregateHourly(data) {
             acc[key] = [];
         }
 
-        acc[key].push(curr.Pressione);
+        acc[key].push(curr.gas);
         return acc;
     }, {});
 
@@ -175,7 +175,7 @@ function updateCharts(labelsMinuto, dataMinuto, labelsOra, dataOra, ciUpper, ciL
             data: {
                 labels: labelsMinuto,
                 datasets: [{
-                    label: 'Pressione',
+                    label: 'gas',
                     data: dataMinuto,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     fill: false,
@@ -214,7 +214,7 @@ function updateCharts(labelsMinuto, dataMinuto, labelsOra, dataOra, ciUpper, ciL
                     },
                     y: {
                         display: true,
-                        title: { display: true, text: 'Pressione (Pa)' }
+                        title: { display: true, text: 'kOhms' }
                     }
                 }
             }
@@ -231,7 +231,7 @@ function updateCharts(labelsMinuto, dataMinuto, labelsOra, dataOra, ciUpper, ciL
 				labels: labelsOra, 
 				datasets: [
 					{
-						label: 'Pressione Media Oraria',
+						label: 'kOhms Media Oraria',
 						data: dataOra,
 						borderColor: 'rgba(153, 102, 255, 1)',
 						fill: false,
@@ -285,7 +285,7 @@ function updateCharts(labelsMinuto, dataMinuto, labelsOra, dataOra, ciUpper, ciL
 						},
 					y: {
 						display: true,
-						title: { display: true, text: 'Pressione (Pa)' }
+						title: { display: true, text: 'gas (%)' }
 					}
 				}
 			}
