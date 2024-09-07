@@ -3,7 +3,7 @@ document.getElementById('update-data').addEventListener('click', function() {
 });
 
 function loadDataAndUpdateCharts() {
-    const url = 'https://script.google.com/macros/s/AKfycbxd1U-hm2xo79srYB-o9AdgHBBCKOrbaL4fFzdJlXbzhpV08Sq8Tua6qk_5Q78cJWFZ/exec';  // Sostituisci con l'URL della tua web app
+    const url = 'https://script.google.com/macros/s/AKfycbxd1U-hm2xo79srYB-o9AdgHBBCKOrbaL4fFzdJlXbzhpV08Sq8Tua6qk_5Q78cJWFZ/exec'; 
 
     fetch(url)
         .then(response => response.json())
@@ -34,10 +34,6 @@ function parseDateString(dateString) {
     // Create a new Date object using the parsed values
     return new Date(year, month - 1, day, hours, minutes, seconds);
 }
-
-
-
-
 
 function processAndDisplayData(data) {
     // Pre-process data
@@ -92,7 +88,7 @@ function processAndDisplayData(data) {
     const dataMinuto = filteredDataMinuto.map(row => row.Temperatura);
 
     // Preparazione dei dati per il secondo grafico (media oraria)
-    const hourlyData = aggregateHourly(filteredDataMinuto); // Modificato per utilizzare i dati filtrati
+    const hourlyData = aggregateHourly(filteredDataMinuto);
     const labelsOra = hourlyData.map(row => row.label);
     const dataOra = hourlyData.map(row => row.meanTemp);
     const ciUpper = hourlyData.map(row => row.ciUpper);
@@ -123,7 +119,7 @@ function filterDataByTime(data, filter) {
             timeFrame = 1 * 60 * 60 * 1000;  // 1 ore in millisecondi
             break;
         default:
-            return data; // Se è selezionato "tutti", restituisci tutti i dati
+            return data;
     }
 
     const filteredData = data.filter(row => row.Data.getTime() >= (lastTimestamp - timeFrame));
