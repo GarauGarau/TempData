@@ -6,92 +6,121 @@
     <title>Dashboard Temperatura</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body {
+    background-color: rgb(238, 238, 237);
+    color: #241e1d;
+}
+/* Banner */
+.banner {
+    background-color: rgb(188, 173, 175);
+    padding: 20px 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #dee2e6;
+    width: 100%;
+    color: #241e1d;
+}
 
-    <style>
-        body {
-            background-color: rgb(238, 238, 237);
-            color: #241e1d;
-        }
-        .banner {
-            background-color: rgb(188, 173, 175);
-            padding: 20px 10px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #dee2e6;
-            width: 100%;
-            color: #241e1d;
-        }
-        .banner-title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .banner-date {
-            font-size: 14px;
-            color: #241e1d;
-        }
-        .nav-item {
-            margin-left: 20px;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        .nav-item img {
-            width: 24px;
-            height: 24px;
-            display: inline-block;
-            filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
-        }
-        nav {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-        .counter {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .counter h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        .counter p {
-            font-size: 30px;
-            font-weight: bold;
-            margin: 0;
-        }
-        .counter canvas {
-            width: 100px;
-            height: 100px;
-            margin: auto;
-        }
-        .counter-details {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #555;
-        }
-        .counter-details span {
-            display: inline-block;
-        }
-        footer {
-            margin-top: 50px;
-            padding: 10px 0;
-            text-align: center;
-            font-size: 12px;
-            color: #241e1d;
-        }
-        footer img {
-            margin-left: 10px;
-            margin-right: 10px;
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
-        }
-    </style>
+.banner-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Icone di navigazione */
+.nav-item img {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+}
+
+/* Contenitore grafico */
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+/* Navigazione */
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap; /* Consente il wrapping solo quando necessario */
+}
+
+.nav-item {
+    margin-left: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+@media (max-width: 576px) {
+    nav {
+        justify-content: center; /* Centra le icone in modalità mobile */
+    }
+    .nav-item {
+        margin-left: 10px; /* Riduce il margine per adattarsi meglio */
+        margin-bottom: 10px; /* Aggiunge spazio verticale tra le righe */
+    }
+}
+
+/* Contatore */
+.counter {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.counter h3 {
+    font-size: 25px;
+    margin-bottom: 13px;
+}
+
+.counter p {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.counter img {
+    width: 50px;
+    height: 50px;
+}
+
+.counter-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.counter-details span {
+    display: inline-block;
+}
+
+/* Footer */
+footer {
+    margin-top: 50px;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #241e1d;
+}
+
+footer img {
+    margin: 0 10px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+}
+</style>
 </head>
 <body>
     <div class="banner">
@@ -109,7 +138,7 @@
 						<a class="nav-item" href="humcharts.html">
                             <img src="drop-half-bottom.svg" alt="Grafici" title="Grafici umidità">
                         </a>
-						<a class="nav-item" href="charts.html">
+						<a class="nav-item" href="presscharts.html">
                             <img src="cloud-sun.svg" alt="Grafici" title="Grafici pressione barometrica">
                         </a>
 						<a class="nav-item" href="charts.html">
@@ -172,139 +201,137 @@
         <a href="https://alessiogarau.me"><img src="user.svg" alt="Personal Website"></a>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('https://script.google.com/macros/s/AKfycbxd1U-hm2xo79srYB-o9AdgHBBCKOrbaL4fFzdJlXbzhpV08Sq8Tua6qk_5Q78cJWFZ/exec')
-                .then(response => response.json())
-                .then(data => {
-                    // Calcola i valori min, max e media per umidità
-                    const humidityValues = data.map(item => item['Umidità']);
-                    const humidityMin = Math.min(...humidityValues).toFixed(1);
-                    const humidityMax = Math.max(...humidityValues).toFixed(1);
-                    const humidityAvg = (humidityValues.reduce((sum, val) => sum + val, 0) / humidityValues.length).toFixed(1);
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			fetch('https://script.google.com/macros/s/AKfycbxd1U-hm2xo79srYB-o9AdgHBBCKOrbaL4fFzdJlXbzhpV08Sq8Tua6qk_5Q78cJWFZ/exec')
+				.then(response => response.json())
+				.then(data => {
+					// Calcola i valori min, max e media per umidità
+					const humidityValues = data.map(item => item['Umidità']);
+					const humidityMin = Math.min(...humidityValues).toFixed(1);
+					const humidityMax = Math.max(...humidityValues).toFixed(1);
+					const humidityAvg = (humidityValues.reduce((sum, val) => sum + val, 0) / humidityValues.length).toFixed(1);
 
-                    // Calcola i valori min, max e media per temperatura
-                    const temperatureValues = data.map(item => item['Temperatura']);
-                    const temperatureMin = Math.min(...temperatureValues).toFixed(1);
-                    const temperatureMax = Math.max(...temperatureValues).toFixed(1);
-                    const temperatureAvg = (temperatureValues.reduce((sum, val) => sum + val, 0) / temperatureValues.length).toFixed(1);
+					// Calcola i valori min, max e media per temperatura
+					const temperatureValues = data.map(item => item['Temperatura']);
+					const temperatureMin = Math.min(...temperatureValues).toFixed(1);
+					const temperatureMax = Math.max(...temperatureValues).toFixed(1);
+					const temperatureAvg = (temperatureValues.reduce((sum, val) => sum + val, 0) / temperatureValues.length).toFixed(1);
 
-                    // Calcola i valori min, max e media per pressione
-                    const pressureValues = data.map(item => item['Pressione']);
-                    const pressureMin = Math.min(...pressureValues).toFixed(1);
-                    const pressureMax = Math.max(...pressureValues).toFixed(1);
-                    const pressureAvg = (pressureValues.reduce((sum, val) => sum + val, 0) / pressureValues.length).toFixed(1);
+					// Calcola i valori min, max e media per pressione
+					const pressureValues = data.map(item => item['Pressione']);
+					const pressureMin = Math.min(...pressureValues).toFixed(1);
+					const pressureMax = Math.max(...pressureValues).toFixed(1);
+					const pressureAvg = (pressureValues.reduce((sum, val) => sum + val, 0) / pressureValues.length).toFixed(1);
 
-                    // Prendi l'ultima riga dei dati
-                    const lastRow = data[data.length - 1];
+					// Prendi l'ultima riga dei dati
+					const lastRow = data[data.length - 1];
 
-                    // Aggiorna i contatori principali con l'ultimo valore
-                    document.getElementById('humidity').textContent = `${(lastRow['Umidità']).toFixed(1)}%`;
-                    document.getElementById('temperature').textContent = `${lastRow['Temperatura'].toFixed(1)}°C`;
-                    document.getElementById('pressure').textContent = `${lastRow['Pressione'].toFixed(1)} hPa`;
+					// Aggiorna i contatori principali con l'ultimo valore
+					document.getElementById('humidity').textContent = `${(lastRow['Umidità']).toFixed(1)}%`;
+					document.getElementById('temperature').textContent = `${lastRow['Temperatura'].toFixed(1)}°C`;
+					document.getElementById('pressure').textContent = `${lastRow['Pressione'].toFixed(1)} hPa`;
 
-                    // Aggiorna i valori min, avg, max
-                    document.getElementById('humidity-min').textContent = `Min: ${humidityMin}%`;
-                    document.getElementById('humidity-avg').textContent = `Avg: ${humidityAvg}%`;
-                    document.getElementById('humidity-max').textContent = `Max: ${humidityMax}%`;
+					// Aggiorna i valori min, avg, max
+					document.getElementById('humidity-min').textContent = `Min: ${humidityMin}%`;
+					document.getElementById('humidity-avg').textContent = `Avg: ${humidityAvg}%`;
+					document.getElementById('humidity-max').textContent = `Max: ${humidityMax}%`;
 
-                    document.getElementById('temperature-min').textContent = `Min: ${temperatureMin}°C`;
-                    document.getElementById('temperature-avg').textContent = `Avg: ${temperatureAvg}°C`;
-                    document.getElementById('temperature-max').textContent = `Max: ${temperatureMax}°C`;
+					document.getElementById('temperature-min').textContent = `Min: ${temperatureMin}°C`;
+					document.getElementById('temperature-avg').textContent = `Avg: ${temperatureAvg}°C`;
+					document.getElementById('temperature-max').textContent = `Max: ${temperatureMax}°C`;
 
-                    document.getElementById('pressure-min').textContent = `Min: ${pressureMin} hPa`;
-                    document.getElementById('pressure-avg').textContent = `Avg: ${pressureAvg} hPa`;
-                    document.getElementById('pressure-max').textContent = `Max: ${pressureMax} hPa`;
+					document.getElementById('pressure-min').textContent = `Min: ${pressureMin} hPa`;
+					document.getElementById('pressure-avg').textContent = `Avg: ${pressureAvg} hPa`;
+					document.getElementById('pressure-max').textContent = `Max: ${pressureMax} hPa`;
 
-                    // Formatta la data dell'ultimo aggiornamento
-                    if (lastRow['Data']) {
-                        const date = new Date(lastRow['Data']);
-                        const formattedDate = date.toLocaleDateString('it-IT');
-                        const formattedTime = date.toLocaleTimeString('it-IT');
-                        document.getElementById('last-update').textContent = `Ultimo aggiornamento: ${formattedDate} ${formattedTime}`;
-                    }
+					// Formatta la data dell'ultimo aggiornamento
+					if (lastRow['Data']) {
+						const date = new Date(lastRow['Data']);
+						const formattedDate = date.toLocaleDateString('it-IT');
+						const formattedTime = date.toLocaleTimeString('it-IT');
+						document.getElementById('last-update').textContent = `Ultimo aggiornamento: ${formattedDate} ${formattedTime}`;
+					}
 
-                    // Funzione per aggiornare i grafici
-                    function updateGauge(chart, value, min, max) {
-                        const percentage = (value - min) / (max - min) * 100;
-                        let color = '#549256';
+					// Ottieni gli ultimi 5 valori per ogni dato
+					const recentHumidityValues = humidityValues.slice(-10);
+					const recentTemperatureValues = temperatureValues.slice(-10);
+					const recentPressureValues = pressureValues.slice(-10);
+					const labels = Array(recentHumidityValues.length).fill(''); // Etichette vuote per l'asse X
 
-                        if (percentage > 80) {
-                            color = '#e75d56';
-                        } else if (percentage > 50) {
-                            color = '#eac861';
-                        } else if (percentage > 20) {
-                            color = '#549256';
-                        }
+					// Configura i grafici a linee
+					const humidityChart = new Chart(document.getElementById('humidityChart').getContext('2d'), {
+						type: 'line',
+						data: {
+							labels: labels,
+							datasets: [{
+								data: recentHumidityValues,
+								fill: false,
+								borderColor: '#549256',
+								tension: 0.1
+							}]
+						},
+						options: {
+							scales: {
+								x: { display: false },
+								y: { display: true }
+							},
+							plugins: {
+								legend: { display: false },
+								tooltip: { enabled: false }
+							}
+						}
+					});
 
-                        chart.data.datasets[0].data = [percentage, 100 - percentage];
-                        chart.data.datasets[0].backgroundColor = [color, '#e0e0e0'];
-                        chart.update();
-                    }
+					const temperatureChart = new Chart(document.getElementById('temperatureChart').getContext('2d'), {
+						type: 'line',
+						data: {
+							labels: labels,
+							datasets: [{
+								data: recentTemperatureValues,
+								fill: false,
+								borderColor: '#e75d56',
+								tension: 0.1
+							}]
+						},
+						options: {
+							scales: {
+								x: { display: false },
+								y: { display: true }
+							},
+							plugins: {
+								legend: { display: false },
+								tooltip: { enabled: false }
+							}
+						}
+					});
 
-                    // Configura i grafici
-                    const humidityChart = new Chart(document.getElementById('humidityChart').getContext('2d'), {
-                        type: 'doughnut',
-                        data: {
-                            datasets: [{
-                                data: [0, 100],
-                                backgroundColor: ['#00ff00', '#e0e0e0']
-                            }]
-                        },
-                        options: {
-                            circumference: 180,
-                            rotation: 270,
-                            cutout: '60%',
-                            plugins: {
-                                tooltip: { enabled: false }
-                            }
-                        }
-                    });
+					const pressureChart = new Chart(document.getElementById('pressureChart').getContext('2d'), {
+						type: 'line',
+						data: {
+							labels: labels,
+							datasets: [{
+								data: recentPressureValues,
+								fill: false,
+								borderColor: '#eac861',
+								tension: 0.1
+							}]
+						},
+						options: {
+							scales: {
+								x: { display: false },
+								y: { display: true }
+							},
+							plugins: {
+								legend: { display: false },
+								tooltip: { enabled: false }
+							}
+						}
+					});
+				})
+				.catch(error => console.error('Errore durante il recupero dei dati:', error));
+		});
+	</script>
 
-                    const temperatureChart = new Chart(document.getElementById('temperatureChart').getContext('2d'), {
-                        type: 'doughnut',
-                        data: {
-                            datasets: [{
-                                data: [0, 100],
-                                backgroundColor: ['#00ff00', '#e0e0e0']
-                            }]
-                        },
-                        options: {
-                            circumference: 180,
-                            rotation: 270,
-                            cutout: '60%',
-                            plugins: {
-                                tooltip: { enabled: false }
-                            }
-                        }
-                    });
-
-                    const pressureChart = new Chart(document.getElementById('pressureChart').getContext('2d'), {
-                        type: 'doughnut',
-                        data: {
-                            datasets: [{
-                                data: [0, 100],
-                                backgroundColor: ['#00ff00', '#e0e0e0']
-                            }]
-                        },
-                        options: {
-                            circumference: 180,
-                            rotation: 270,
-                            cutout: '60%',
-                            plugins: {
-                                tooltip: { enabled: false }
-                            }
-                        }
-                    });
-
-                    // Aggiorna i grafici con i dati attuali
-                    updateGauge(humidityChart, (lastRow['Umidità']), humidityMin, humidityMax);
-                    updateGauge(temperatureChart, lastRow['Temperatura'], temperatureMin, temperatureMax);
-                    updateGauge(pressureChart, lastRow['Pressione'], pressureMin, pressureMax);
-
-                })
-                .catch(error => console.error('Errore durante il recupero dei dati:', error));
-        });
-    </script>
 </body>
 </html>
