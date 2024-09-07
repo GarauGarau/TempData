@@ -201,137 +201,150 @@ footer img {
         <a href="https://alessiogarau.me"><img src="user.svg" alt="Personal Website"></a>
     </footer>
 
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			fetch('https://script.google.com/macros/s/AKfycbxd1U-hm2xo79srYB-o9AdgHBBCKOrbaL4fFzdJlXbzhpV08Sq8Tua6qk_5Q78cJWFZ/exec')
-				.then(response => response.json())
-				.then(data => {
-					// Calcola i valori min, max e media per umidità
-					const humidityValues = data.map(item => item['Umidità']);
-					const humidityMin = Math.min(...humidityValues).toFixed(1);
-					const humidityMax = Math.max(...humidityValues).toFixed(1);
-					const humidityAvg = (humidityValues.reduce((sum, val) => sum + val, 0) / humidityValues.length).toFixed(1);
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('https://script.google.com/macros/s/AKfycbxd1U-hm2xo79srYB-o9AdgHBBCKOrbaL4fFzdJlXbzhpV08Sq8Tua6qk_5Q78cJWFZ/exec')
+            .then(response => response.json())
+            .then(data => {
+                // Calcola i valori min, max e media per umidità
+                const humidityValues = data.map(item => item['Umidità']);
+                const humidityMin = Math.min(...humidityValues).toFixed(1);
+                const humidityMax = Math.max(...humidityValues).toFixed(1);
+                const humidityAvg = (humidityValues.reduce((sum, val) => sum + val, 0) / humidityValues.length).toFixed(1);
 
-					// Calcola i valori min, max e media per temperatura
-					const temperatureValues = data.map(item => item['Temperatura']);
-					const temperatureMin = Math.min(...temperatureValues).toFixed(1);
-					const temperatureMax = Math.max(...temperatureValues).toFixed(1);
-					const temperatureAvg = (temperatureValues.reduce((sum, val) => sum + val, 0) / temperatureValues.length).toFixed(1);
+                // Calcola i valori min, max e media per temperatura
+                const temperatureValues = data.map(item => item['Temperatura']);
+                const temperatureMin = Math.min(...temperatureValues).toFixed(1);
+                const temperatureMax = Math.max(...temperatureValues).toFixed(1);
+                const temperatureAvg = (temperatureValues.reduce((sum, val) => sum + val, 0) / temperatureValues.length).toFixed(1);
 
-					// Calcola i valori min, max e media per pressione
-					const pressureValues = data.map(item => item['Pressione']);
-					const pressureMin = Math.min(...pressureValues).toFixed(1);
-					const pressureMax = Math.max(...pressureValues).toFixed(1);
-					const pressureAvg = (pressureValues.reduce((sum, val) => sum + val, 0) / pressureValues.length).toFixed(1);
+                // Calcola i valori min, max e media per pressione
+                const pressureValues = data.map(item => item['Pressione']);
+                const pressureMin = Math.min(...pressureValues).toFixed(1);
+                const pressureMax = Math.max(...pressureValues).toFixed(1);
+                const pressureAvg = (pressureValues.reduce((sum, val) => sum + val, 0) / pressureValues.length).toFixed(1);
 
-					// Prendi l'ultima riga dei dati
-					const lastRow = data[data.length - 1];
+                // Prendi l'ultima riga dei dati
+                const lastRow = data[data.length - 1];
 
-					// Aggiorna i contatori principali con l'ultimo valore
-					document.getElementById('humidity').textContent = `${(lastRow['Umidità']).toFixed(1)}%`;
-					document.getElementById('temperature').textContent = `${lastRow['Temperatura'].toFixed(1)}°C`;
-					document.getElementById('pressure').textContent = `${lastRow['Pressione'].toFixed(1)} hPa`;
+                // Aggiorna i contatori principali con l'ultimo valore
+                document.getElementById('humidity').textContent = `${(lastRow['Umidità']).toFixed(1)}%`;
+                document.getElementById('temperature').textContent = `${lastRow['Temperatura'].toFixed(1)}°C`;
+                document.getElementById('pressure').textContent = `${lastRow['Pressione'].toFixed(1)} hPa`;
 
-					// Aggiorna i valori min, avg, max
-					document.getElementById('humidity-min').textContent = `Min: ${humidityMin}%`;
-					document.getElementById('humidity-avg').textContent = `Avg: ${humidityAvg}%`;
-					document.getElementById('humidity-max').textContent = `Max: ${humidityMax}%`;
+                // Aggiorna i valori min, avg, max
+                document.getElementById('humidity-min').textContent = `Min: ${humidityMin}%`;
+                document.getElementById('humidity-avg').textContent = `Avg: ${humidityAvg}%`;
+                document.getElementById('humidity-max').textContent = `Max: ${humidityMax}%`;
 
-					document.getElementById('temperature-min').textContent = `Min: ${temperatureMin}°C`;
-					document.getElementById('temperature-avg').textContent = `Avg: ${temperatureAvg}°C`;
-					document.getElementById('temperature-max').textContent = `Max: ${temperatureMax}°C`;
+                document.getElementById('temperature-min').textContent = `Min: ${temperatureMin}°C`;
+                document.getElementById('temperature-avg').textContent = `Avg: ${temperatureAvg}°C`;
+                document.getElementById('temperature-max').textContent = `Max: ${temperatureMax}°C`;
 
-					document.getElementById('pressure-min').textContent = `Min: ${pressureMin} hPa`;
-					document.getElementById('pressure-avg').textContent = `Avg: ${pressureAvg} hPa`;
-					document.getElementById('pressure-max').textContent = `Max: ${pressureMax} hPa`;
+                document.getElementById('pressure-min').textContent = `Min: ${pressureMin} hPa`;
+                document.getElementById('pressure-avg').textContent = `Avg: ${pressureAvg} hPa`;
+                document.getElementById('pressure-max').textContent = `Max: ${pressureMax} hPa`;
 
-					// Formatta la data dell'ultimo aggiornamento
-					if (lastRow['Data']) {
-						const date = new Date(lastRow['Data']);
-						const formattedDate = date.toLocaleDateString('it-IT');
-						const formattedTime = date.toLocaleTimeString('it-IT');
-						document.getElementById('last-update').textContent = `Ultimo aggiornamento: ${formattedDate} ${formattedTime}`;
-					}
+                // Formatta la data dell'ultimo aggiornamento
+                if (lastRow['Data']) {
+                    const date = new Date(lastRow['Data']);
+                    const formattedDate = date.toLocaleDateString('it-IT');
+                    const formattedTime = date.toLocaleTimeString('it-IT');
+                    document.getElementById('last-update').textContent = `Ultimo aggiornamento: ${formattedDate} ${formattedTime}`;
+                }
 
-					// Ottieni gli ultimi 5 valori per ogni dato
-					const recentHumidityValues = humidityValues.slice(-10);
-					const recentTemperatureValues = temperatureValues.slice(-10);
-					const recentPressureValues = pressureValues.slice(-10);
-					const labels = Array(recentHumidityValues.length).fill(''); // Etichette vuote per l'asse X
+                // Ottieni gli ultimi 5 valori per ogni dato
+                const recentHumidityValues = humidityValues.slice(-10);
+                const recentTemperatureValues = temperatureValues.slice(-10);
+                const recentPressureValues = pressureValues.slice(-10);
+                const labels = Array(recentHumidityValues.length).fill(''); // Etichette vuote per l'asse X
 
-					// Configura i grafici a linee
-					const humidityChart = new Chart(document.getElementById('humidityChart').getContext('2d'), {
-						type: 'line',
-						data: {
-							labels: labels,
-							datasets: [{
-								data: recentHumidityValues,
-								fill: false,
-								borderColor: '#549256',
-								tension: 0.1
-							}]
-						},
-						options: {
-							scales: {
-								x: { display: false },
-								y: { display: true }
-							},
-							plugins: {
-								legend: { display: false },
-								tooltip: { enabled: false }
-							}
-						}
-					});
+                // Configura i grafici a linee con i nuovi limiti per l'asse Y
+                const humidityChart = new Chart(document.getElementById('humidityChart').getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: recentHumidityValues,
+                            fill: false,
+                            borderColor: '#549256',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: { display: false },
+                            y: {
+                                display: true,
+                                min: Math.min(...recentHumidityValues) - 1,  // Minimo - 1pp
+                                max: Math.max(...recentHumidityValues) + 1   // Massimo + 1pp
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        }
+                    }
+                });
 
-					const temperatureChart = new Chart(document.getElementById('temperatureChart').getContext('2d'), {
-						type: 'line',
-						data: {
-							labels: labels,
-							datasets: [{
-								data: recentTemperatureValues,
-								fill: false,
-								borderColor: '#e75d56',
-								tension: 0.1
-							}]
-						},
-						options: {
-							scales: {
-								x: { display: false },
-								y: { display: true }
-							},
-							plugins: {
-								legend: { display: false },
-								tooltip: { enabled: false }
-							}
-						}
-					});
+                const temperatureChart = new Chart(document.getElementById('temperatureChart').getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: recentTemperatureValues,
+                            fill: false,
+                            borderColor: '#e75d56',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: { display: false },
+                            y: {
+                                display: true,
+                                min: Math.min(...recentTemperatureValues) - 1,  // Minimo - 1
+                                max: Math.max(...recentTemperatureValues) + 1   // Massimo + 1
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        }
+                    }
+                });
 
-					const pressureChart = new Chart(document.getElementById('pressureChart').getContext('2d'), {
-						type: 'line',
-						data: {
-							labels: labels,
-							datasets: [{
-								data: recentPressureValues,
-								fill: false,
-								borderColor: '#eac861',
-								tension: 0.1
-							}]
-						},
-						options: {
-							scales: {
-								x: { display: false },
-								y: { display: true }
-							},
-							plugins: {
-								legend: { display: false },
-								tooltip: { enabled: false }
-							}
-						}
-					});
-				})
-				.catch(error => console.error('Errore durante il recupero dei dati:', error));
-		});
-	</script>
+                const pressureChart = new Chart(document.getElementById('pressureChart').getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: recentPressureValues,
+                            fill: false,
+                            borderColor: '#eac861',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: { display: false },
+                            y: {
+                                display: true,
+                                min: Math.min(...recentPressureValues) - 1,  // Minimo - 1
+                                max: Math.max(...recentPressureValues) + 1   // Massimo + 1
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Errore durante il recupero dei dati:', error));
+    });
+</script>
+
 
 </body>
 </html>
