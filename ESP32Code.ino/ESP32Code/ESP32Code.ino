@@ -12,11 +12,12 @@ const char* password = "modernbolt125";
 Adafruit_BME680 bme;
 
 // URL del Google Apps Script
-const char* serverName = "https://script.google.com/macros/s/AKfycbwnHDEZiHMtDhzag0jx_tmaReNel2sIEYVBsa7aipGuZoqdkQAmk9oF4SnMdXYefvQMeA/exec";
+const char* serverName = "https://script.google.com/macros/s/AKfycbwtm4dpGCTzrnTVLz0WJSYQA-hbAtcXpSUnuj3gnWg8yunMbFHSkKeK9rtdRxv51C1q-Q/exec";
 
 // Variabili per gestire il tempo
 unsigned long previousMillis = 0;
 const long interval = 60000;  // 1 minuto
+const int numSamples = 5;  // Numero di campioni per il calcolo della media
 
 void setup() {
   Serial.begin(115200);
@@ -77,42 +78,56 @@ void loop() {
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
 
-    // Leggi la temperatura, pressione, umidità e gas dal sensore BME680
-    if (bme.performReading()) {
-      float temperature = bme.temperature;
-      float pressure = bme.pressure / 100.0;  // Converti in hPa
-      float humidity = bme.humidity;
-      float gas = bme.gas_resistance / 1000.0;  // Converti in kOhms
+    // Leggi più campioni dal sensore BME680 e calcola la media
+    float temperatureSum = 0;
+    float pressureSum = 0;
+    float humiditySum = 0;
+    float gasSum = 0;
 
-      // Formatta i dati con due decimali
-      String temperatureString = String(temperature, 2);
-      String pressureString = String(pressure, 2);
-      String humidityString = String(humidity, 2);
-      String gasString = String(gas, 2);
-
-      // Invia i dati al Google Sheets
-      if (WiFi.status() == WL_CONNECTED) {
-          HTTPClient http;
-          http.begin(serverName);
-          http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-          String httpRequestData = "temperature=" + temperatureString + "&pressure=" + pressureString + "&humidity=" + humidityString + "&gas=" + gasString;
-          int httpResponseCode = http.POST(httpRequestData);
-
-          if (httpResponseCode > 0) {
-              String response = http.getString();
-              Serial.println(httpResponseCode);
-              Serial.println(response);
-          } else {
-              Serial.print("Error on sending POST: ");
-              Serial.println(httpResponseCode);
-          }
-          http.end();
+    for (int i = 0; i < numSamples; i++) {
+      if (bme.performReading()) {
+        temperatureSum += bme.temperature;
+        pressureSum += bme.pressure / 100.0;  // Converti in hPa
+        humiditySum += bme.humidity;
+        gasSum += bme.gas_resistance / 1000.0;  // Converti in kOhms
       } else {
-          Serial.println("WiFi Disconnected");
+        Serial.println("Errore nella lettura dei dati dal sensore BME680.");
       }
+      delay(500);  // Ritardo tra le letture per consentire al sensore di stabilizzarsi
+    }
+
+    // Calcola la media dei campioni
+    float temperature = temperatureSum / numSamples;
+    float pressure = pressureSum / numSamples;
+    float humidity = humiditySum / numSamples;
+    float gas = gasSum / numSamples;
+
+    // Formatta i dati con due decimali
+    String temperatureString = String(temperature, 2);
+    String pressureString = String(pressure, 2);
+    String humidityString = String(humidity, 2);
+    String gasString = String(gas, 2);
+
+    // Invia i dati al Google Sheets
+    if (WiFi.status() == WL_CONNECTED) {
+      HTTPClient http;
+      http.begin(serverName);
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      String httpRequestData = "temperature=" + temperatureString + "&pressure=" + pressureString + "&humidity=" + humidityString + "&gas=" + gasString;
+      int httpResponseCode = http.POST(httpRequestData);
+
+      if (httpResponseCode > 0) {
+        String response = http.getString();
+        Serial.println(httpResponseCode);
+        Serial.println(response);
+      } else {
+        Serial.print("Error on sending POST: ");
+        Serial.println(httpResponseCode);
+      }
+      http.end();
     } else {
-      Serial.println("Errore nella lettura dei dati dal sensore BME680.");
+      Serial.println("WiFi Disconnected");
     }
   }
 }
