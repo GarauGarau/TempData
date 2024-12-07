@@ -141,7 +141,7 @@
 
             <h3>BME680 Sensor Overview</h3>
             <p>
-                The BME680 is an all-in-one sensor that integrates multiple sensing capabilities into a single compact package. Specifically, it includes a small Metal-Oxide (MOX) sensor. The heated metal oxide modifies its resistance based on the presence of Volatile Organic Compounds (VOCs) in the air, allowing it to detect gases and alcohols such as ethanol, methanol, and carbon monoxide. This feature makes the BME680 ideal for monitoring air quality.
+                The <a href="https://cdn-shop.adafruit.com/product-files/3660/BME680.pdf" target="_blank">BME680</a> is an all-in-one sensor that integrates multiple sensing capabilities into a single compact package. Specifically, it includes a small Metal-Oxide (MOX) sensor. The heated metal oxide modifies its resistance based on the presence of Volatile Organic Compounds (VOCs) in the air, allowing it to detect gases and alcohols such as ethanol, methanol, and carbon monoxide. This feature makes the BME680 ideal for monitoring air quality.
             </p>
             <p>
                 The BME680 offers users the ability to individually adjust the sampling rates for each sensor component—temperature, humidity, pressure, and gas. Additionally, users can set the inter-measurement delay and the IIR filter sampling coefficient. This combination of settings provides precise control over measurement timing and accuracy, as well as effective energy management.
@@ -190,7 +190,7 @@
 
             <h3>Data Transmission</h3>
             <p>
-                The ESP32 microcontroller collects sensor data from the BME680 and sends it to a <a href="https://docs.google.com/spreadsheets/your-spreadsheet-link" target="_blank">Google Spreadsheet</a>. This is accomplished using a <strong>Google App Script</strong>, which serves as an intermediary to receive HTTP requests from the ESP32 and append the data to the spreadsheet.
+                The ESP32 microcontroller collects sensor data from the BME680 and sends it to a <a href="https://docs.google.com/spreadsheets/d/1Uz_UY8qTs3DPF6qPaeZ6OCMvKPDMCwT7Gqzmrs_sll0/edit?usp=sharing" target="_blank">Google Spreadsheet</a>. This is accomplished using a <strong>Google App Script</strong>, which serves as an intermediary to receive HTTP requests from the ESP32 and append the data to the spreadsheet.
             </p>
 
             <h3>Data Storage</h3>
@@ -211,7 +211,7 @@
 
             <h2>Arduino Integration</h2>
             <p>
-                The Arduino code, freely accessible in the <a href="https://github.com/your-repo-link" target="_blank">GitHub repository</a>, integrates the use of the <strong>BSEC (Bosch Software Environmental Cluster)</strong> libraries. These libraries allow for calibrated readings from Bosch, providing offsets for temperature and humidity measurements. Additionally, the code processes gas sensor values to generate a final <strong>Indoor Air Quality (IAQ)</strong> value, offering a comprehensive overview of the environmental conditions within the apartment.
+                The Arduino code, freely accessible in the <a href="https://github.com/GarauGarau/TempData/blob/main/besc_script/besc_script.ino" target="_blank">GitHub repository</a>, integrates the use of the <strong>BSEC (Bosch Software Environmental Cluster)</strong> libraries. These libraries allow for calibrated readings from Bosch, providing offsets for temperature and humidity measurements. Additionally, the code processes gas sensor values to generate a final <strong>Indoor Air Quality (IAQ)</strong> value, offering a comprehensive overview of the environmental conditions within the apartment.
 				
 			<figure id="image2">
                 <img src="esp32sensor.jpg" alt="Circuit">
