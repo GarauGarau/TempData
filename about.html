@@ -1,91 +1,104 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Dashboard Temperatura</title>
+    <title>About - Temperature Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<style>
-    body {
-        background-color: rgb(238, 238, 237); /* Colore dello sfondo del sito */
-        color: #241e1d; /* Colore del testo principale */
-    }
-    .banner {
-        background-color: rgb(188, 173, 175); /* Colore del banner principale */
-        padding: 20px 10px; /* Aumenta il padding verticale per rendere il banner più alto */
-        margin-bottom: 20px;
-        border-bottom: 2px solid #dee2e6;
-        width: 100%;
-        color: #241e1d; /* Colore del testo nel banner */
-    }
-    .banner-title {
-        font-size: 24px;
-        font-weight: bold;
-    }
-    .banner-date {
-        font-size: 14px;
-        color: #241e1d; /* Colore della data nel banner */
-    }
-    .nav-item {
-        margin-left: 20px;
-        display: inline-block; /* Evita che ci siano spazi aggiuntivi */
-        vertical-align: middle;
-    }
-    .nav-item img {
-        width: 24px;
-        height: 24px;
-        display: inline-block;
-        filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
-        /* Applica il colore alle icone (tramite filter) */
-    }
-    nav {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-    .content {
-        margin: 20px;
-        font-size: 18px;
-        line-height: 1.6;
-    }
-    h2 {
-        color: rgb(110, 65, 69); /* Colore del banner */
-        font-weight: bold; /* Grassetto per i titoli delle sezioni */
-    }
-    a {
-        color: rgb(110, 65, 69); /* Colore del banner per i link ipertestuali */
-        font-weight: bold; /* Grassetto per i link ipertestuali */
-    }
-    figure {
-        text-align: center; /* Centratura delle immagini */
-        margin: 20px auto; /* Spazio intorno alla figura */
-    }
-    figure img {
-        max-width: 50%; /* Dimensione immagine ridotta rispetto alla larghezza della pagina */
-        height: auto; /* Mantiene il rapporto d'aspetto dell'immagine */
-    }
-    figcaption {
-        color: rgb(110, 65, 69); /* Colore del banner per la didascalia */
-    }
-    footer {
-        margin-top: 50px;
-        padding: 10px 0;
-        text-align: center;
-        font-size: 12px;
-        color: #241e1d; /* Colore del testo nel footer */
-    }
-    footer img {
-        margin-left: 10px;
-        margin-right: 10px;
-        width: 24px;
-        height: 24px;
-        cursor: pointer;
-        filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
-        /* Applica il colore alle icone nel footer */
-    }
-</style>
+    <style>
+        body {
+            background-color: rgb(238, 238, 237); /* Site background color */
+            color: #241e1d; /* Main text color */
+        }
+        .banner {
+            background-color: rgb(188, 173, 175); /* Main banner color */
+            padding: 20px 10px; /* Increased vertical padding for a taller banner */
+            margin-bottom: 20px;
+            border-bottom: 2px solid #dee2e6;
+            width: 100%;
+            color: #241e1d; /* Text color in the banner */
+        }
+        .banner-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .banner-date {
+            font-size: 14px;
+            color: #241e1d; /* Date color in the banner */
+        }
+        .nav-item {
+            margin-left: 20px;
+            display: inline-block; /* Prevents additional spacing */
+            vertical-align: middle;
+        }
+        .nav-item img {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+            /* Applies color to icons (via filter) */
+        }
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .content {
+            margin: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        h2 {
+            color: rgb(110, 65, 69); /* Banner color */
+            font-weight: bold; /* Bold for section titles */
+        }
+        h3 {
+            color: rgb(110, 65, 69); /* Banner color for subsections */
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        a {
+            color: rgb(110, 65, 69); /* Banner color for hyperlinks */
+            font-weight: bold; /* Bold for hyperlinks */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        figure {
+            text-align: center; /* Centers images */
+            margin: 20px auto; /* Space around the figure */
+        }
+        figure img {
+            max-width: 50%; /* Image size reduced relative to page width */
+            height: auto; /* Maintains image aspect ratio */
+        }
+        figcaption {
+            color: rgb(110, 65, 69); /* Banner color for captions */
+        }
+        footer {
+            margin-top: 50px;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 12px;
+            color: #241e1d; /* Footer text color */
+        }
+        footer img {
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            filter: invert(18%) sepia(6%) saturate(9%) hue-rotate(356deg) brightness(94%) contrast(94%);
+            /* Applies color to footer icons */
+        }
+    </style>
 </head>
 <body>
     <!-- Banner -->
@@ -101,13 +114,13 @@
                             <img src="speedometer.svg" alt="Home" title="Dashboard">
                         </a>
                         <a class="nav-item" href="charts.html">
-                            <img src="thermometer.svg" alt="Grafici" title="Grafici temperatura">
+                            <img src="thermometer.svg" alt="Charts" title="Temperature Charts">
                         </a>
-						<a class="nav-item" href="humcharts.html">
-                            <img src="drop-half-bottom.svg" alt="Grafici" title="Grafici umidità">
+                        <a class="nav-item" href="humcharts.html">
+                            <img src="drop-half-bottom.svg" alt="Humidity Charts" title="Humidity Charts">
                         </a>
-						<a class="nav-item" href="presscharts.html">
-                            <img src="cloud-sun.svg" alt="Grafici" title="Grafici umidità">
+                        <a class="nav-item" href="presscharts.html">
+                            <img src="cloud-sun.svg" alt="Pressure Charts" title="Pressure Charts">
                         </a>
                         <a class="nav-item" href="about.html">
                             <img src="info.svg" alt="About This Site">
@@ -120,36 +133,106 @@
 
     <div class="container-fluid">
         <div class="content">
-            <h2>This is a working in progress section</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            Come mostrato nella <a href="#image1">Figura 1</a>, l'elemento principale di questa sezione è rappresentato da...</p>
-            <figure id="image1">
-                <img src="image1.jpg" alt="Descrizione Immagine 1">
-                <figcaption>Figura 1: Descrizione dell'immagine 1</figcaption>
-            </figure>
+            <p>
+                This side project was developed entirely using ChatGPT, along with basic knowledge of electronics, C programming, and front-end development.
+				The current site is a dashboard hosted on GitHub that displays the internal environmental parameters of my apartment.
+				All measurements are taken using an ESP32 board and a Bosch BME680 sensor. Data is recorded every minute and sent to a spreadsheet, where it is summarized in real time in other sections of this site.
+            </p>
 
-            <h2>Section 2</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <figure id="image2">
-                <img src="image1.jpg" alt="Descrizione Immagine 2">
-                <figcaption>Figura 2: Descrizione dell'immagine 2</figcaption>
+            <h3>BME680 Sensor Overview</h3>
+            <p>
+                The BME680 is an all-in-one sensor that integrates multiple sensing capabilities into a single compact package. Specifically, it includes a small Metal-Oxide (MOX) sensor. The heated metal oxide modifies its resistance based on the presence of Volatile Organic Compounds (VOCs) in the air, allowing it to detect gases and alcohols such as ethanol, methanol, and carbon monoxide. This feature makes the BME680 ideal for monitoring air quality.
+            </p>
+            <p>
+                The BME680 offers users the ability to individually adjust the sampling rates for each sensor component—temperature, humidity, pressure, and gas. Additionally, users can set the inter-measurement delay and the IIR filter sampling coefficient. This combination of settings provides precise control over measurement timing and accuracy, as well as effective energy management.
+				
+			<figure id="image1">
+                <img src="sensor.jpg" alt="Package dimensions">
+                <figcaption>Figura 2: Package dimensions</figcaption>
             </figure>
+			
+            </p>
 
-            <h2>Section 3</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            La <a href="#image3">Figura 3</a> rappresenta una sintesi delle conclusioni principali</p>
-            <figure id="image3">
-                <img src="image1.jpg" alt="Descrizione Immagine 3">
-                <figcaption>Figura 3: Descrizione dell'immagine 3</figcaption>
+            <h3>Sensor Capabilities</h3>
+
+            <h4>Temperature Detection</h4>
+            <ul>
+                <li><strong>Range:</strong> -40°C to +85°C</li>
+                <li><strong>Precision:</strong> ±0.5°C (within 0°C to +65°C)</li>
+                <li><strong>Resolution:</strong> 0.01°C</li>
+                <li><strong>Note:</strong> The onboard temperature sensor is attached to the PCB and experiences slight self-heating, typically resulting in temperature readings that are slightly higher than the ambient environment.</li>
+            </ul>
+
+            <h4>Humidity Detection</h4>
+            <ul>
+                <li><strong>Range:</strong> 0% to 100% Relative Humidity (non-condensing)</li>
+                <li><strong>Precision:</strong> ±3%</li>
+                <li><strong>Resolution:</strong> 0.008%</li>
+            </ul>
+
+            <h4>Pressure Detection</h4>
+            <ul>
+                <li><strong>Operating Temperature:</strong> -40°C to +85°C (optimal precision between 0°C and +65°C)</li>
+                <li><strong>Range:</strong> 300 hPa to 1100 hPa</li>
+                <li><strong>Precision:</strong> ±1.0 hPa</li>
+                <li><strong>Resolution:</strong> 0.2 Pa</li>
+            </ul>
+
+            <h4>Gas Detection</h4>
+            <p>
+                The gas sensor operates by internally heating a small surface and measuring the resistance of the gas layer. This resistance indicates the concentration of VOCs in the air, providing an indirect measure of air quality. It’s important to note that while the sensor provides a resistance value relative to the overall VOC content, it cannot differentiate between specific gases or alcohols.
+            </p>
+
+            <h2>Backend Architecture</h2>
+            <p>
+                The backend of this project employs a straightforward and <strong>"naive"</strong> solution that achieves the desired functionality with minimal effort and investment.
+            </p>
+
+            <h3>Data Transmission</h3>
+            <p>
+                The ESP32 microcontroller collects sensor data from the BME680 and sends it to a <a href="https://docs.google.com/spreadsheets/your-spreadsheet-link" target="_blank">Google Spreadsheet</a>. This is accomplished using a <strong>Google App Script</strong>, which serves as an intermediary to receive HTTP requests from the ESP32 and append the data to the spreadsheet.
+            </p>
+
+            <h3>Data Storage</h3>
+            <p>
+                Sensor readings are stored in a <strong>Google Spreadsheet</strong> each minute, providing an accessible and easily manageable repository for the collected data. This method eliminates the need for setting up and maintaining a dedicated database.
+            </p>
+
+            <h3>Data Retrieval and Processing</h3>
+            <p>
+                A <strong>JavaScript</strong> script reads the data from the Google Spreadsheet. This script organizes the data, making it ready for visualization on the dashboard.
+            </p>
+
+            <h3>Frontend Dashboard</h3>
+            <ul>
+                <li><strong>Summary Screen:</strong> Displays the most recent measurements from the last five minutes, allowing for quick and easy monitoring of current environmental conditions.</li>
+                <li><strong>Dedicated Pages:</strong> Each sensor metric (e.g., temperature, humidity, pressure, air quality) has its own dedicated page where users can view the complete historical data, enabling detailed analysis and trend tracking over time.</li>
+            </ul>
+
+            <h2>Arduino Integration</h2>
+            <p>
+                The Arduino code, freely accessible in the <a href="https://github.com/your-repo-link" target="_blank">GitHub repository</a>, integrates the use of the <strong>BSEC (Bosch Software Environmental Cluster)</strong> libraries. These libraries allow for calibrated readings from Bosch, providing offsets for temperature and humidity measurements. Additionally, the code processes gas sensor values to generate a final <strong>Indoor Air Quality (IAQ)</strong> value, offering a comprehensive overview of the environmental conditions within the apartment.
+				
+			<figure id="image2">
+                <img src="esp32sensor.jpg" alt="Circuit">
+                <figcaption>Figure 2: Circuit</figcaption>
             </figure>
+				
+            </p>
         </div>
-    </div>
 
-    <footer>
-        <p>About me</p>
-        <a href="https://github.com/GarauGarau"><img src="github-logo.svg" alt="GitHub Logo"></a>
-        <a href="https://x.com/alessiogarau22"><img src="x-logo.svg" alt="X (Twitter) Logo"></a>
-        <a href="https://alessiogarau.io"><img src="user.svg" alt="Personal Website"></a>
-    </footer>
+        <footer>
+            <p>About me</p>
+            <a href="https://github.com/GarauGarau" target="_blank">
+                <img src="github-logo.svg" alt="GitHub Logo">
+            </a>
+            <a href="https://x.com/alessiogarau22" target="_blank">
+                <img src="x-logo.svg" alt="X (Twitter) Logo">
+            </a>
+            <a href="https://alessiogarau.io" target="_blank">
+                <img src="user.svg" alt="Personal Website">
+            </a>
+        </footer>
+    </div>
 </body>
 </html>
